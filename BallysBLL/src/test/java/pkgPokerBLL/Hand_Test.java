@@ -582,7 +582,7 @@ public class Hand_Test {
 	@Test
 	public void TestFullHouse1J() {
 		Hand h = new Hand();
-		h.AddToCardsInHand(new Card(eSuit.SPADES, eRank.TEN,1));
+		h.AddToCardsInHand(new Card(eSuit.JOKER, eRank.JOKER,1));
 		h.AddToCardsInHand(new Card(eSuit.HEARTS, eRank.TEN,1));
 		h.AddToCardsInHand(new Card(eSuit.DIAMONDS, eRank.TEN,1));
 		h.AddToCardsInHand(new Card(eSuit.CLUBS, eRank.TWO,1));
@@ -641,7 +641,7 @@ public class Hand_Test {
 	@Test
 	public void TestStraight1J() {
 		Hand h = new Hand();
-		h.AddToCardsInHand(new Card(eSuit.SPADES, eRank.THREE,1));
+		h.AddToCardsInHand(new Card(eSuit.JOKER, eRank.JOKER,1));
 		h.AddToCardsInHand(new Card(eSuit.HEARTS, eRank.TWO,1));
 		h.AddToCardsInHand(new Card(eSuit.DIAMONDS, eRank.FOUR,1));
 		h.AddToCardsInHand(new Card(eSuit.CLUBS, eRank.FIVE,1));
@@ -819,11 +819,11 @@ public class Hand_Test {
 	@Test
 	public void Pair1J() {
 		Hand h = new Hand();
-		h.AddToCardsInHand(new Card(eSuit.CLUBS, eRank.TWO,1));
+		h.AddToCardsInHand(new Card(eSuit.JOKER, eRank.JOKER,1));
 		h.AddToCardsInHand(new Card(eSuit.SPADES, eRank.THREE,1));
 		h.AddToCardsInHand(new Card(eSuit.HEARTS, eRank.FOUR,1));
 		h.AddToCardsInHand(new Card(eSuit.DIAMONDS, eRank.KING,1));
-		h.AddToCardsInHand(new Card(eSuit.HEARTS, eRank.KING,1));
+		h.AddToCardsInHand(new Card(eSuit.HEARTS, eRank.ACE,1));
 		
 		try {
 			h = h.EvaluateHand();
