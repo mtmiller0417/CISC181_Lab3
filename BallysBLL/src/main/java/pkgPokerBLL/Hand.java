@@ -88,8 +88,7 @@ public class Hand {
 		// J J J J J
 		ArrayList<Hand> ReturnHands = new ArrayList<Hand>();
 		ArrayList<Hand> FinalHands = new ArrayList<Hand>();
-		int numJokers = 0;
-		
+		int numJokers = 0;		
 		Deck deck = new Deck();
 		
 		for(Card c: h.getCardsInHand())
@@ -106,25 +105,22 @@ public class Hand {
 		}
 		else if(numJokers == 1)
 		{
-			int count = 0; 
 			for(Card c: deck.getDeckCards())
 			{
 				Hand h1 = h;
 				h1.getCardsInHand().set(0, c);
 				ReturnHands.add(h);
-				count++;
 			}
 			System.out.println(ReturnHands.size());
 		}
 		else if(numJokers == 2)
 		{
-			int count = 0;
+			
 			for(Card c: deck.getDeckCards())
 			{
 				Hand h1 = h;
 				h1.getCardsInHand().set(0, c);
 				ReturnHands.add(h);
-				count++;
 			}
 			// 2 J 5 4 3
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
@@ -133,13 +129,11 @@ public class Hand {
 		}
 		else if(numJokers == 3)
 		{
-			int count = 0;
 			for(Card c: deck.getDeckCards())
 			{
 				Hand h1 = h;
 				h1.getCardsInHand().set(0, c);
 				ReturnHands.add(h);
-				count++;
 			}
 			// 2 J 5 4 3
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
@@ -149,13 +143,11 @@ public class Hand {
 		}
 		else if(numJokers == 4)
 		{
-			int count = 0;
 			for(Card c: deck.getDeckCards())
 			{
 				Hand h1 = h;
 				h1.getCardsInHand().set(0, c);
 				ReturnHands.add(h);
-				 count++;
 			}
 			// 2 J 5 4 3
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
@@ -167,13 +159,11 @@ public class Hand {
 		}
 		else if(numJokers == 5)
 		{
-			int count = 0;
 			for(Card c: deck.getDeckCards())
 			{
 				Hand h1 = h;
-				h1.getCardsInHand().set(count, c);
+				h1.getCardsInHand().set(0, c);
 				ReturnHands.add(h);
-				count++;
 			}
 			// 2 J 5 4 3
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
@@ -184,46 +174,45 @@ public class Hand {
 			System.out.println(FinalHands.size());
 		}
 		
+		
+		
 		return FinalHands;
 	}
 	
 	
 	public  static ArrayList<Hand> expansion(int index, Deck deck, ArrayList<Hand> ReturnHands)
 	{
-		System.out.println("Entered Expansion");
 		ArrayList<Hand> newHands = new ArrayList<Hand>();
+		Deck d = new Deck();
 		for(Hand h2 : ReturnHands)
 		{
-			for(Card c: deck.getDeckCards())
+			for(Card c: d.getDeckCards())
 			{
 				Hand h3 = h2;//pass in hand and index
 				h3.getCardsInHand().set(index, c);
 				newHands.add(h3);
-				
 			}
 		}
-		
 		return newHands;
 	}
 	
-	public static void main(String args []) throws TieException
+	public static void main(String args [])
 	{
 		Hand h = new Hand();
-		h.AddCardToHand(new Card(eRank.JOKER, eSuit.CLUBS,4));
-		h.AddCardToHand(new Card(eRank.JOKER, eSuit.CLUBS,4));
-		h.AddCardToHand(new Card(eRank.SIX, eSuit.CLUBS,4));
-		h.AddCardToHand(new Card(eRank.THREE, eSuit.CLUBS,4));
+		h.AddCardToHand(new Card(eRank.JOKER, eSuit.CLUBS,1));
+		h.AddCardToHand(new Card(eRank.JOKER, eSuit.CLUBS,2));
+		h.AddCardToHand(new Card(eRank.EIGHT, eSuit.CLUBS,3));
 		h.AddCardToHand(new Card(eRank.FOUR, eSuit.CLUBS,4));
+		h.AddCardToHand(new Card(eRank.TWO, eSuit.CLUBS,5));
 		Collections.sort(h.getCardsInHand());
-		ArrayList<Hand> handle = ExplodeHands(h);
-		PickBestHand(handle);
-		String test1 = handle.get(0).getCardsInHand().get(0).geteRank().toString();
-		String test2 = handle.get(0).getCardsInHand().get(1).geteRank().toString();
-		System.out.println(test1.equals(test2));
-		System.out.println(test1);
-		System.out.println(test2);
-		
-		
+		ExplodeHands(h);
+		//Collections.sort(h.getCardsInHand());
+		String test = h.getCardsInHand().get(0).geteRank().toString();
+		String test2 = h.getCardsInHand().get(1).geteRank().toString();
+		String test3 = h.getCardsInHand().get(2).geteRank().toString();
+		String test4 = h.getCardsInHand().get(3).geteRank().toString();
+		String test5 = h.getCardsInHand().get(4).geteRank().toString();
+		//System.out.println("MAIN: "+ test + ", " +test2 + ", " +test3 + ", " +test4 + ", " +test5 );		
 	}
 	
 	
