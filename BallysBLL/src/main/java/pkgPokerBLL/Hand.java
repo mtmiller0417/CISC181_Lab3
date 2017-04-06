@@ -40,37 +40,27 @@ public class Hand {
 	public void AddToCardsInHand(Card c) {
 		CardsInHand.add(c);
 	}
+
 	
-	/*public static Comparator<HandScore> HandStrengthRank = new Comparator<HandScore>() {
-
-		public int compare(HandScore h1, HandScore h2) {
-
-			int Cno1 = h1.getHandStrength().getHandStrength();
-			int Cno2 = h2.getHandStrength().getHandStrength();
-
-			 For descending order 
-			return Cno2 - Cno1;
-
-		}
-	};*/
-
-	//What to do?
 	public Hand EvaluateHand() {
 
 		Hand h = null;
 
 		ArrayList<Hand> ExplodedHands = ExplodeHands(this);
-
+		
 		for (Hand hand : ExplodedHands) {
 			hand = Hand.EvaluateHand(hand);
 		}
-
+		System.out.println("Size: " + ExplodedHands.size());
+		
 		//	Figure out best hand
 		Collections.sort(ExplodedHands, Hand.HandRank);
+		System.out.println("After ExplodedHands");
 		
 		//	Return best hand.  
 		//	TODO: Fix...  what to do if there is a tie?
 		//   Return the first one bc it doesnt matter? 
+		System.out.println("HandScore: "+ExplodedHands.get(0).getHandScore().getHandStrength().toString());
 		return ExplodedHands.get(0);
 	}
 
@@ -91,6 +81,7 @@ public class Hand {
 		ArrayList<Hand> FinalHands = new ArrayList<Hand>();
 		int numJokers = 0;		
 		Deck deck = new Deck();
+		Collections.sort(h.getCardsInHand());
 		
 		for(Card c: h.getCardsInHand())
 		{
@@ -110,9 +101,13 @@ public class Hand {
 			{
 				Hand h1 = h;
 				h1.getCardsInHand().set(0, c);
-				ReturnHands.add(h);
-			}
-			System.out.println(ReturnHands.size());
+				//ReturnHands.add(h);
+				ReturnHands.add(h1);
+				//return ReturnHands;
+			}	
+			System.out.println("RH : " + ReturnHands.size());
+			return ReturnHands;
+			//System.out.println(ReturnHands.size()); //checking to make sure number of cards is right
 		}
 		else if(numJokers == 2)
 		{
@@ -126,7 +121,7 @@ public class Hand {
 			// 2 J 5 4 3
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
 			FinalHands = newHands;
-			System.out.println(FinalHands.size());
+			//System.out.println(FinalHands.size()); checking to make sure number of cards is right
 		}
 		else if(numJokers == 3)
 		{
@@ -140,7 +135,7 @@ public class Hand {
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
 			ArrayList<Hand> newHands1 = expansion(2, deck, newHands);
 			FinalHands = newHands1;
-			System.out.println(FinalHands.size());
+			//System.out.println(FinalHands.size()); checking to make sure number of cards is right
 		}
 		else if(numJokers == 4)
 		{
@@ -155,7 +150,7 @@ public class Hand {
 			ArrayList<Hand> newHands1 = expansion(2, deck, newHands);
 			ArrayList<Hand> newHands2 = expansion(3, deck, newHands1);
 			FinalHands = newHands2;
-			System.out.println(FinalHands.size());
+			//System.out.println(FinalHands.size()); checking to make sure number of cards is right
 			
 		}
 		else if(numJokers == 5)
@@ -170,13 +165,13 @@ public class Hand {
 			ArrayList<Hand> newHands = expansion(1, deck, ReturnHands);
 			ArrayList<Hand> newHands1 = expansion(2, deck, newHands);
 			ArrayList<Hand> newHands2 = expansion(3, deck, newHands1);
-			ArrayList<Hand> newHands3 = expansion(4, deck, newHands2);
+			ArrayList<Hand> newHands3 = expansion(4, deck, newHands2);      
 			FinalHands = newHands3;
-			System.out.println(FinalHands.size());
+			//System.out.println(FinalHands.size()); checking to make sure number of cards is right
 		}
 		
 		
-		
+		//System.out.println("FinalHands Size: " + FinalHands.size());
 		return FinalHands;
 	}
 	
@@ -200,14 +195,14 @@ public class Hand {
 	public static void main(String args [])
 	{
 		Hand h = new Hand();
-		h.AddCardToHand(new Card(eRank.JOKER, eSuit.JOKER,1));
-		h.AddCardToHand(new Card(eRank.FIVE, eSuit.CLUBS,2));
-		h.AddCardToHand(new Card(eRank.THREE, eSuit.CLUBS,3));
+		h.AddCardToHand(new Card(eRank.FIVE, eSuit.SPADES,5));
 		h.AddCardToHand(new Card(eRank.FOUR, eSuit.CLUBS,4));
-		h.AddCardToHand(new Card(eRank.TWO, eSuit.CLUBS,5));
+		h.AddCardToHand(new Card(eRank.THREE, eSuit.CLUBS,3));
+		h.AddCardToHand(new Card(eRank.TWO, eSuit.CLUBS,2));
+		h.AddCardToHand(new Card(eRank.JOKER, eSuit.JOKER,1));
 		
-		//Collections.sort(h.getCardsInHand());
-		//ExplodeHands(h);
+		Collections.sort(h.getCardsInHand());
+		ExplodeHands(h);
 		
 		
 		//Collections.sort(h.getCardsInHand());
@@ -223,6 +218,8 @@ public class Hand {
 		String testtSuit5 = h.getCardsInHand().get(4).geteSuit().toString();
 		System.out.println("MAIN: "+ testt + "/" + testtSuit + ", " +testt2+ "/" + testtSuit2 + ", " +testt3+ "/" + testtSuit3 + ", " +testt4+ "/" + testtSuit4 + ", " +testt5+ "/" + testtSuit5 );
 		Hand hh = h.EvaluateHand();
+		//hh.get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNbr()) - 1 == (cards.get(eCardNo.SecondCard.getCardNo()).geteRank().getiRankNbr()
+		int x = hh.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNbr();
 		System.out.println(hh.getHandScore().getHandStrength().toString());
 	}
 
@@ -341,23 +338,26 @@ public class Hand {
 				isAce != true)
 		{
 			isStraight = true;
-		}
-		
+		}	
 		
 		
 		return isStraight;
 		
 	}
 
-	public static boolean isAce(ArrayList<Card> cards) {
-		if ((cards.get(eCardNo.FirstCard.getCardNo()).geteRank() == eRank.ACE)
-				&& (cards.get(eCardNo.SecondCard.getCardNo()).geteRank() == eRank.KING)
-				|| (cards.get(eCardNo.SecondCard.getCardNo()).geteRank() == eRank.FIVE)) {
+	public static boolean isAce(ArrayList<Card> cards)//Helper Method
+	{
+		//returns true if the first card in the hand is an ace
+		if (cards.get(eCardNo.FirstCard.getCardNo()).geteRank() == eRank.ACE)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
+	
 
 	public static boolean isFlush(ArrayList<Card> cards) {
 		boolean isFlush = false;
@@ -470,14 +470,16 @@ public class Hand {
 			{
 				isHandStraight = true;	
 				hs.setHandStrength(eHandStrength.Straight);
-				//hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank());// Only a high hand for straight b/c it requires all 5 cards
+				hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank());// Only a high hand for straight b/c it requires all 5 cards
+				hs.setLoHand(null);
 			}
 			else if(isAce && isStraight(h.getCardsInHand()))
 			{
 				
 				isHandStraight = true;	
 				hs.setHandStrength(eHandStrength.Straight);
-				//hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank());// Only a high hand for straight b/c it requires all 5 cards
+				hs.setHiHand(h.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).geteRank());// Only a high hand for straight b/c it requires all 5 cards
+				hs.setLoHand(null);
 			
 			}
 			else
